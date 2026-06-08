@@ -36,58 +36,52 @@
             </div>
             
             <form class="login-form" id="registerForm" novalidate>
-
-    <!-- Username -->
-    <div class="form-group">
-        <div class="input-group neu-input">
-            <input type="text" id="username" name="username" required placeholder=" ">
-            <label for="username">Nama Pengguna</label>
-
-            <div class="input-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="7" r="4"/>
-                    <path d="M5.5 21a6.5 6.5 0 0 1 13 0"/>
-                </svg>
-            </div>
-        </div>
-        <span class="error-message" id="usernameError"></span>
-    </div>
-
-    <!-- Email -->
-    <div class="form-group">
-        <div class="input-group neu-input">
-            <input type="email" id="email" name="email" required placeholder=" ">
-            <label for="email">Email</label>
-
-            <div class="input-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                </svg>
-            </div>
-        </div>
-        <span class="error-message" id="emailError"></span>
-    </div>
-
-    <!-- Password -->
-    <div class="form-group">
-        <div class="input-group neu-input password-group">
-            <input type="password" id="password" name="password" required placeholder=" ">
-            <label for="password">Password</label>
-
-            <div class="input-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="11" width="18" height="11" rx="2"/>
-                    <path d="M7 11V7a5 5 0 0110 0v4"/>
-                </svg>
-            </div>
-        </div>
-        <span class="error-message" id="passwordError"></span>
-    </div>
-    <button type="submit" class="neu-button login-btn">
-        <span class="btn-text">Register</span>
-    </button>
-</form>
+ 
+                <!-- Username -->
+                <div class="form-group">
+                    <div class="input-group neu-input">
+                        <input type="text" id="username" name="username" required placeholder=" ">
+                        <label for="username">Nama Pengguna</label>
+                        <div class="input-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="7" r="4"/>
+                                <path d="M5.5 21a6.5 6.5 0 0 1 13 0"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="error-message" id="usernameError"></span>
+                </div>
+ 
+                <!-- Email -->
+                <div class="form-group">
+                    <div class="input-group neu-input">
+                        <input type="email" id="email" name="email" required placeholder=" ">
+                        <label for="email">Email</label>
+                        <div class="input-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="error-message" id="emailError"></span>
+                </div>
+ 
+                <!-- Password -->
+                <div class="form-group">
+                    <div class="input-group neu-input password-group">
+                        <input type="password" id="password" name="password" required placeholder=" ">
+                        <label for="password">Password</label>
+                        <div class="input-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2"/>
+                                <path d="M7 11V7a5 5 0 0110 0v4"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="error-message" id="passwordError"></span>
+                </div>
+ 
                 <div class="form-options">
                     <div class="remember-wrapper">
                         <input type="checkbox" id="remember" name="remember">
@@ -102,7 +96,17 @@
                     </div>
                     <a href="#" class="forgot-link">Forgot password?</a>
                 </div>
-
+ 
+                <!-- ✅ Satu tombol Register -->
+                <button type="submit" class="neu-button login-btn">
+                    <span class="btn-text">Register</span>
+                    <div class="btn-loader" style="display:none;">
+                        <div class="neu-spinner"></div>
+                    </div>
+                </button>
+ 
+            </form>
+ 
                 <button type="submit" class="neu-button login-btn">
                     <a href="index.html" class="neu-button login-btn"> Sign in </a>
                     <div class="btn-loader">
