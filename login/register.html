@@ -18,6 +18,14 @@
     <meta name="twitter:description" content="Soft-UI login form with realistic dual shadows and ambient mouse-tracked lighting.">
     <meta name="twitter:image" content="https://puikinsh.github.io/login-forms/assets/screenshots/neumorphism.png">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .success-message { display: none; flex-direction: column; align-items: center; gap: 12px; }
+        .success-message.visible { display: flex; }
+        .error-message { display: none; color: #ef4444; font-size: 12px; margin-top: 4px; padding-left: 4px; }
+        .neu-input.input-error input {
+            box-shadow: inset 2px 2px 5px rgba(239,68,68,.25), inset -2px -2px 5px rgba(255,255,255,.7);
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
@@ -34,9 +42,10 @@
                 <h2>Welcome back</h2>
                 <p>Please sign in to continue</p>
             </div>
-            
+
+            <!-- ✅ SATU form register yang benar, tidak tumpang tindih dengan elemen login -->
             <form class="login-form" id="registerForm" novalidate>
- 
+
                 <!-- Username -->
                 <div class="form-group">
                     <div class="input-group neu-input">
@@ -51,7 +60,7 @@
                     </div>
                     <span class="error-message" id="usernameError"></span>
                 </div>
- 
+
                 <!-- Email -->
                 <div class="form-group">
                     <div class="input-group neu-input">
@@ -66,7 +75,7 @@
                     </div>
                     <span class="error-message" id="emailError"></span>
                 </div>
- 
+
                 <!-- Password -->
                 <div class="form-group">
                     <div class="input-group neu-input password-group">
@@ -81,7 +90,7 @@
                     </div>
                     <span class="error-message" id="passwordError"></span>
                 </div>
- 
+
                 <div class="form-options">
                     <div class="remember-wrapper">
                         <input type="checkbox" id="remember" name="remember">
@@ -96,7 +105,7 @@
                     </div>
                     <a href="#" class="forgot-link">Forgot password?</a>
                 </div>
- 
+
                 <!-- ✅ Satu tombol Register -->
                 <button type="submit" class="neu-button login-btn">
                     <span class="btn-text">Register</span>
@@ -104,16 +113,8 @@
                         <div class="neu-spinner"></div>
                     </div>
                 </button>
- 
+
             </form>
- 
-                <button type="submit" class="neu-button login-btn">
-                    <a href="index.html" class="neu-button login-btn"> Sign in </a>
-                    <div class="btn-loader">
-                        <div class="neu-spinner"></div>
-                    </div>
-                </button>
-    
 
             <div class="divider">
                 <div class="divider-line"></div>
@@ -142,19 +143,99 @@
                 </button>
             </div>
 
+            <!-- ✅ Success message (tersembunyi, muncul setelah register berhasil) -->
             <div class="success-message" id="successMessage">
                 <div class="success-icon neu-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                         <polyline points="20 6 9 17 4 12"/>
                     </svg>
                 </div>
-                <h3>Success!</h3>
-                <p>Redirecting to your dashboard...</p>
+                <h3>Registrasi Berhasil!</h3>
+                <p>Mengalihkan ke halaman login...</p>
             </div>
+
         </div>
     </div>
 
     <script src="script.js"></script>
-        <script src="js/register.js"></script>
+    <script src="js/register.js"></script>
+    <script>
+        // ── Register form logic ──────────────────────────────────────────────
+        (function () {
+            const form = document.getElementById('registerForm');
+            if (!form) return;
+
+            function showError(fieldId, msg) {
+                const err = document.getElementById(fieldId + 'Error');
+                if (err) { err.textContent = msg; err.style.display = 'block'; }
+                const inp = document.getElementById(fieldId);
+                if (inp) inp.closest('.neu-input')?.classList.add('input-error');
+            }
+
+            function clearError(fieldId) {
+                const err = document.getElementById(fieldId + 'Error');
+                if (err) { err.textContent = ''; err.style.display = 'none'; }
+                const inp = document.getElementById(fieldId);
+                if (inp) inp.closest('.neu-input')?.classList.remove('input-error');
+            }
+
+            function validate() {
+                let ok = true;
+                ['username', 'email', 'password'].forEach(clearError);
+
+                const username = document.getElementById('username').value.trim();
+                const email    = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+
+                if (username.length < 3) {
+                    showError('username', 'Nama pengguna minimal 3 karakter.');
+                    ok = false;
+                }
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    showError('email', 'Masukkan email yang valid.');
+                    ok = false;
+                }
+                if (password.length < 6) {
+                    showError('password', 'Password minimal 6 karakter.');
+                    ok = false;
+                }
+                return ok;
+            }
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (!validate()) return;
+
+                // Loading state
+                const btn      = form.querySelector('.neu-button');
+                const btnText  = btn.querySelector('.btn-text');
+                const btnLoader= btn.querySelector('.btn-loader');
+                btnText.style.display  = 'none';
+                btnLoader.style.display= 'flex';
+                btn.disabled = true;
+
+                // Simulasi proses register (ganti dengan fetch ke API kamu)
+                setTimeout(function () {
+                    // Sembunyikan form, tampilkan pesan sukses
+                    form.style.transition = 'opacity .4s';
+                    form.style.opacity    = '0';
+                    form.style.pointerEvents = 'none';
+
+                    const successMsg = document.getElementById('successMessage');
+                    successMsg.classList.add('visible');
+
+                    // Redirect ke login setelah 2 detik
+                    setTimeout(function () {
+                        window.location.href = 'login.html'; // ← ganti sesuai path login kamu
+                    }, 2000);
+                }, 1000);
+            });
+
+            // Hapus error saat user mulai mengetik
+            ['username', 'email', 'password'].forEach(function (id) {
+                document.getElementById(id)?.addEventListener('input', () => clearError(id));
+            });
+        })();
+    </script>
 </body>
 </html>
